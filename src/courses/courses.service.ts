@@ -27,6 +27,8 @@ export class CoursesService {
         HttpStatus.NOT_FOUND,
       );
     }
+
+    return course;
   }
 
   create(createCourseDto: any) {
@@ -37,6 +39,13 @@ export class CoursesService {
     const indexCourse = this.courses.findIndex(
       (course: Course) => course.id === Number(id),
     );
+
+    if (indexCourse === -1) {
+      throw new HttpException(
+        `Cannot found course with ${id}`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
 
     this.courses[indexCourse] = updateCourseDto;
   }
